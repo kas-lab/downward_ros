@@ -46,9 +46,9 @@ public:
     const std::string & node_namespace = "",
     const rclcpp::Duration solver_timeout = 60s);
 
-    bool isDomainValid(
-      const std::string & domain,
-      const std::string & node_namespace = "");
+  bool isDomainValid(
+    const std::string & domain,
+    const std::string & node_namespace = "");
 };
 
 }  // namespace plansys2

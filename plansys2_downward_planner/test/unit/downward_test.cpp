@@ -27,7 +27,7 @@
 #include "pluginlib/class_list_macros.hpp"
 #include "plansys2_core/PlanSolverBase.hpp"
 
-void test_plan_generation(const std::string & argument = "--alias lama-first")
+void test_plan_generation(const std::string & argument = "--search 'astar(blind())'")
 {
   std::string pkgpath = ament_index_cpp::get_package_share_directory("plansys2_downward_planner");
   std::ifstream domain_ifs(pkgpath + "/pddl/domain_simple.pddl");

@@ -73,7 +73,7 @@ void DownwardPlanner::configure(
   lc_node_ = lc_node;
 
   arguments_parameter_name_ = plugin_name + ".arguments";
-  lc_node_->declare_parameter<std::string>(arguments_parameter_name_, "--alias lama-first");
+  lc_node_->declare_parameter<std::string>(arguments_parameter_name_, "--search 'astar(blind())'");
 
   output_dir_parameter_name_ = plugin_name + ".output_dir";
   lc_node_->declare_parameter<std::string>(
@@ -120,9 +120,9 @@ DownwardPlanner::getPlan(
   const auto args = lc_node_->get_parameter(arguments_parameter_name_).value_to_string();
 
   const int status = system(
-    ("ros2 run downward_ros fast-downward.py " + args + " " +
+    ("ros2 run downward_ros fast-downward.py " +
     domain_file_path.string() + " " + problem_file_path.string() +
-    " > " + plan_file_path.string())
+    " > " + plan_file_path.string() + " " + args)
     .c_str());
 
   if (status == -1) {
@@ -143,7 +143,7 @@ DownwardPlanner::getPlan(
         plansys2_msgs::msg::PlanItem item;
         size_t bracket_pos = line.find("(");
 
-        std::string action = "(" + line.substr(0, bracket_pos-1)+")";
+        std::string action = "(" + line.substr(0, bracket_pos - 1) + ")";
 
         item.action = action;
 
@@ -198,8 +198,8 @@ DownwardPlanner::isDomainValid(
   const auto args = lc_node_->get_parameter(arguments_parameter_name_).value_to_string();
 
   const int status = system(
-    ("ros2 run downward_ros fast-downward.py "+ args + " " + domain_file_path.string() + " " +
-    problem_file_path.string() + " > " +
+    ("ros2 run downward_ros fast-downward.py " + domain_file_path.string() + " " +
+    problem_file_path.string() + " " + args + " > " +
     plan_file_path.string()).c_str());
 
   if (status == -1) {
